@@ -1,121 +1,121 @@
 ### 8.0 [not yet released]
 
-- routing requests can be configured to timeout after some time, see #2795
-- custom_model_file string changed to custom_model_files array, see #2787
-- renamed EdgeKVStorage to KVStorage as it is (temporarily) used for node tage too, see #2705
-- bike vehicles are now allowed to go in reverse direction of oneways, see custom_models/bike.json #196
-- prefer cycleways, bicycle_road and cyclestreet for bike routing, see #2784 and #2778
-- add support for further surfaces like pebblestones or concrete:lanes, see #2751
+- routing requests can be configured to timeout after some time, see [#2795](https://github.com/graphhopper/graphhopper/issues/2795)
+- custom_model_file string changed to custom_model_files array, see [#2787](https://github.com/graphhopper/graphhopper/issues/2787)
+- renamed EdgeKVStorage to KVStorage as it is (temporarily) used for node tage too, see [#2705](https://github.com/graphhopper/graphhopper/issues/2705)
+- bike vehicles are now allowed to go in reverse direction of oneways, see custom_models/bike.json [#196](https://github.com/graphhopper/graphhopper/issues/196)
+- prefer cycleways, bicycle_road and cyclestreet for bike routing, see [#2784](https://github.com/graphhopper/graphhopper/issues/2784) and [#2778](https://github.com/graphhopper/graphhopper/issues/2778)
+- add support for further surfaces like pebblestones or concrete:lanes, see [#2751](https://github.com/graphhopper/graphhopper/issues/2751)
 
 ### 7.0 [14 Mar 2023]
 
-- access node tags via List instead of Map: List<Map<String, Object>> nodeTags = way.getTag("node_tags", emptyList()), see #2705
+- access node tags via List instead of Map: List<Map<String, Object>> nodeTags = way.getTag("node_tags", emptyList()), see [#2705](https://github.com/graphhopper/graphhopper/issues/2705)
 - remove StringEncodedValue support from custom model due to insufficient usage/testing
-- handle also node_tags in handleWayTags, when extending AbstractAccessParser call handleNodeTags, #2738
-- Format of 'areas' in CustomModel changed to 'FeatureCollection'. The old format is deprecated and will be removed in a later version, #2734
+- handle also node_tags in handleWayTags, when extending AbstractAccessParser call handleNodeTags, [#2738](https://github.com/graphhopper/graphhopper/issues/2738)
+- Format of 'areas' in CustomModel changed to 'FeatureCollection'. The old format is deprecated and will be removed in a later version, [#2734](https://github.com/graphhopper/graphhopper/issues/2734)
 - TagParser#handleWayTags no longer returns an IntsRef. We assume it never returned anything other than the input IntsRef.
-- there is no longer a default value for the distanceInfluence parameter in custom models sent via client-hc. Previously it was 70. Not setting it explicitly now means the server-side value will be used. getDistanceInfluence can now be null. Server-side profiles with custom weighting now use distance_influence: 0 by default (previously it was 70). see #2716
-- there is a new, required 'import.osm.ignored_highways' configuration option that must be used to not increase the graph size and decrease performance for motorized-only routing compared to previous versions, #2702
-- new osm_way_id encoded value, #2701
+- there is no longer a default value for the distanceInfluence parameter in custom models sent via client-hc. Previously it was 70. Not setting it explicitly now means the server-side value will be used. getDistanceInfluence can now be null. Server-side profiles with custom weighting now use distance_influence: 0 by default (previously it was 70). see [#2716](https://github.com/graphhopper/graphhopper/issues/2716)
+- there is a new, required 'import.osm.ignored_highways' configuration option that must be used to not increase the graph size and decrease performance for motorized-only routing compared to previous versions, [#2702](https://github.com/graphhopper/graphhopper/issues/2702)
+- new osm_way_id encoded value, [#2701](https://github.com/graphhopper/graphhopper/issues/2701)
 - the parameters vehicle, weighting, edge_based and turn_costs are no longer supported, use the profile parameter instead
-- removed motorroad to road_class conversion, #2329
+- removed motorroad to road_class conversion, [#2329](https://github.com/graphhopper/graphhopper/issues/2329)
 - removed YAML support for custom models on the server-side. Only allow JSON with // comments.
 - Bike2WeightTagParser was removed. Use the bike vehicle with a custom model, see custom_models/bike.json
-- CurvatureWeighting was removed. Use a custom model with 'curvature' instead, see custom_models/curvature.json (#2665)
+- CurvatureWeighting was removed. Use a custom model with 'curvature' instead, see custom_models/curvature.json ([#2665](https://github.com/graphhopper/graphhopper/issues/2665))
 - internal keys for EdgeKVStorage changed to contain the street_ prefix like the path details too. Similarly, the
-  extra_info in the instructions of the API response, see #2661
-- subnetwork preparation can now be run in parallel to slightly speed up the base graph import (#2737)
+  extra_info in the instructions of the API response, see [#2661](https://github.com/graphhopper/graphhopper/issues/2661)
+- subnetwork preparation can now be run in parallel to slightly speed up the base graph import ([#2737](https://github.com/graphhopper/graphhopper/issues/2737))
 - The block_area parameter was removed. Use custom model areas instead.
 
 ### 6.0 [13 Sep 2022]
 
-- Car4WDTagParser was removed. Use the roads vehicle with a custom model, see custom_models/car4wd.json see #2651
+- Car4WDTagParser was removed. Use the roads vehicle with a custom model, see custom_models/car4wd.json see [#2651](https://github.com/graphhopper/graphhopper/issues/2651)
 - When using a DecimalEncodedValue with useMaximumAsInfinity=true and a single bit of space make sure you always use 
-  Double.POSITIVE_INFINITY to set the value, see #2646
+  Double.POSITIVE_INFINITY to set the value, see [#2646](https://github.com/graphhopper/graphhopper/issues/2646)
 - renamed DouglasPeucker to RamerDouglasPeucker
-- path details at via-points are no longer merged, see #2626
+- path details at via-points are no longer merged, see [#2626](https://github.com/graphhopper/graphhopper/issues/2626)
 - removed the FlagEncoder interface. for example encoder.getAccessEnc() is now encodingManager.getBooleanEncodedValue(
-  VehicleAccess.key("car")), #2611
-- backward incompatible change as instructions and the street_name path detail do no longer contain the ref #2598
+  VehicleAccess.key("car")), [#2611](https://github.com/graphhopper/graphhopper/issues/2611)
+- backward incompatible change as instructions and the street_name path detail do no longer contain the ref [#2598](https://github.com/graphhopper/graphhopper/issues/2598)
 - StringIndex is now EdgeKVStorage and can store e.g. byte arrays. String values needs to be limited to 255 bytes before
   storing them. See EdgeKVStorage.cutString and #2597.
-- the Matrix client changed and users have to adapt the usage, see #2587
+- the Matrix client changed and users have to adapt the usage, see [#2587](https://github.com/graphhopper/graphhopper/issues/2587)
 - replaced car$access with car_access (and same for <vehicle>$average_speed and <vehicle>$priority)
-- don't allow cars or motorcycles to use ways tagged with service=emergency_access (#2484)
-- faster flexible routing, especially in conjunction with turn costs (#2571)
-- negative OSM Ids are not supported any longer (#2652)
-- new urban_density encoded value based on road density calculation (#2637)
+- don't allow cars or motorcycles to use ways tagged with service=emergency_access ([#2484](https://github.com/graphhopper/graphhopper/issues/2484))
+- faster flexible routing, especially in conjunction with turn costs ([#2571](https://github.com/graphhopper/graphhopper/issues/2571))
+- negative OSM Ids are not supported any longer ([#2652](https://github.com/graphhopper/graphhopper/issues/2652))
+- new urban_density encoded value based on road density calculation ([#2637](https://github.com/graphhopper/graphhopper/issues/2637))
 
 ### 5.0 [23 Mar 2022]
 
 - Use routing.instructions to disable instructions on the server side. datareader.instructions is used to disable the
-  name parsing (#2537)
+  name parsing ([#2537](https://github.com/graphhopper/graphhopper/issues/2537))
 - no more explicit passByDefaultBarriers in FlagEncoders, blockByDefaultBarriers was renamed to just barriers, no more
-  handling of highway=ford (#2538)
+  handling of highway=ford ([#2538](https://github.com/graphhopper/graphhopper/issues/2538))
 - OSMReader no longer sets the artificial estimated_distance tag, but sets the edge_distance and point_list tags for all
   edges, the way_distance for selected ways and additionally the duration:seconds and speed_from_duration tags when the
-  duration tag is present (#2528)
-- fixed speed calculation for ferry routes with duration tags (#2528)
-- request gzipping for matrix and route clients (#2511)
+  duration tag is present ([#2528](https://github.com/graphhopper/graphhopper/issues/2528))
+- fixed speed calculation for ferry routes with duration tags ([#2528](https://github.com/graphhopper/graphhopper/issues/2528))
+- request gzipping for matrix and route clients ([#2511](https://github.com/graphhopper/graphhopper/issues/2511))
 - bugfix: client-hc now considers headings and custom models (#2009, #2535)
 - the artificial tag duration:seconds is now a long, no longer a string, commit 6d81d8ae8de52987522991edd835e42c8d2046cf
 - added FlagEncoder#getName (use just like toString() before), commit 86f6a8b5209ad8ef47c24d935f5746e7694eb11c
 - faster edge-based CH preparation, especially with large u-turn costs and GermanyCountryRule (many large weight edges
-  due to access=destination on tracks) (#2522)
-- consider subnetworks when evaluating curbside constraints (#2502)
-- improved node-based CH performance (faster preparation and less shortcuts(=memory usage)) (#2491)
-- the GraphHopperApplication class was moved from com.graphhopper.http to com.graphhopper.application (#2487)
+  due to access=destination on tracks) ([#2522](https://github.com/graphhopper/graphhopper/issues/2522))
+- consider subnetworks when evaluating curbside constraints ([#2502](https://github.com/graphhopper/graphhopper/issues/2502))
+- improved node-based CH performance (faster preparation and less shortcuts(=memory usage)) ([#2491](https://github.com/graphhopper/graphhopper/issues/2491))
+- the GraphHopperApplication class was moved from com.graphhopper.http to com.graphhopper.application ([#2487](https://github.com/graphhopper/graphhopper/issues/2487))
 - it is now possible to add CH preparations to an existing graph folder, CH graphs no longer need to be added before
-  GraphHopperStorage#freeze (#2481)
+  GraphHopperStorage#freeze ([#2481](https://github.com/graphhopper/graphhopper/issues/2481))
 - the two EncodedValue implementations accept now negative values too. The default value can now only be 0 or
-  Double.Infinity, but this option will be removed later too, see discussion in #2473
-- throw MaximumNodesExceededException instead of a generic IllegalArgumentException (#2464)
-- removed graphhopper.sh script. Use java command directly instead. (#2431)
-- removed the ferry argument of TagParser#handleWayTags. ferry ways can be recognized using the reader way (#2467)
-- removed RoadEnvironment.SHUTTLE_TRAIN. this is covered by `FERRY` (#2466)
+  Double.Infinity, but this option will be removed later too, see discussion in [#2473](https://github.com/graphhopper/graphhopper/issues/2473)
+- throw MaximumNodesExceededException instead of a generic IllegalArgumentException ([#2464](https://github.com/graphhopper/graphhopper/issues/2464))
+- removed graphhopper.sh script. Use java command directly instead. ([#2431](https://github.com/graphhopper/graphhopper/issues/2431))
+- removed the ferry argument of TagParser#handleWayTags. ferry ways can be recognized using the reader way ([#2467](https://github.com/graphhopper/graphhopper/issues/2467))
+- removed RoadEnvironment.SHUTTLE_TRAIN. this is covered by `FERRY` ([#2466](https://github.com/graphhopper/graphhopper/issues/2466))
 - create edge flags per edge, not per way. increases custom_area precision. areas are recognized by points along the
   edges now -> (#2457, #2472)
-- fixed handling of too large mtb:scale tags (#2458)
+- fixed handling of too large mtb:scale tags ([#2458](https://github.com/graphhopper/graphhopper/issues/2458))
 - added Toll.MISSING; custom models must be adapted to check for explicit toll values e.g `toll != NO`
-  -> `toll == HGV || toll == ALL` (#2164)
-- use GraphHopper#setGraphHopperLocation before calling load() instead of GraphHopper#load(graphHopperLocation) (#2437)
-- barrier nodes at junctions are now ignored (#2433)
-- AbstractFlagEncoder#handleNodeTags was replaced by AbstractFlagEncoder#isBarrier (#2434)
-- consider heading when snapping coordinates to the road network, this is especially important for navigation (#2411)
+  -> `toll == HGV || toll == ALL` ([#2164](https://github.com/graphhopper/graphhopper/issues/2164))
+- use GraphHopper#setGraphHopperLocation before calling load() instead of GraphHopper#load(graphHopperLocation) ([#2437](https://github.com/graphhopper/graphhopper/issues/2437))
+- barrier nodes at junctions are now ignored ([#2433](https://github.com/graphhopper/graphhopper/issues/2433))
+- AbstractFlagEncoder#handleNodeTags was replaced by AbstractFlagEncoder#isBarrier ([#2434](https://github.com/graphhopper/graphhopper/issues/2434))
+- consider heading when snapping coordinates to the road network, this is especially important for navigation ([#2411](https://github.com/graphhopper/graphhopper/issues/2411))
 - OSMReader no longer sets the artificial 'estimated_center' tag and processNode also receives EMPTY_NODEs (971d686)
 
 ### 4.0 [29 Sep 2021]
 
-- faster node-based CH preparation (~20%), (#2390)
+- faster node-based CH preparation (~20%), ([#2390](https://github.com/graphhopper/graphhopper/issues/2390))
 - more flexible ElevationProvider interface, support providing elevation via node tags (#2374, #2381)
-- added country encoded value for all countries (#2353)
+- added country encoded value for all countries ([#2353](https://github.com/graphhopper/graphhopper/issues/2353))
 - bike improvements (#2357, #2371, #2389)
 - improved handling of barriers (#2345, #2340, #2406)
-- removed spatial rules, replaced by country rules and custom areas (#2353)
-- removed api module and moved it into web-api, no more Jackson MixIns (#2372)
-- flag encoders are no longer versioned (#2355)
+- removed spatial rules, replaced by country rules and custom areas ([#2353](https://github.com/graphhopper/graphhopper/issues/2353))
+- removed api module and moved it into web-api, no more Jackson MixIns ([#2372](https://github.com/graphhopper/graphhopper/issues/2372))
+- flag encoders are no longer versioned ([#2355](https://github.com/graphhopper/graphhopper/issues/2355))
 - JSON route response contains now bbox if start and end are identical
 - renamed PriorityCode enums: AVOID_IF_POSSIBLE -> SLIGHT_AVOID, REACH_DEST -> AVOID, AVOID_AT_ALL_COSTS -> AVOID_MORE, WORST -> BAD
-- added smoothness encoded value, used to determine bike speed (#2303)
-- maps: custom_model is now included in URL (#2328)
-- maps/isochrone: works for different profiles now (#2332)
+- added smoothness encoded value, used to determine bike speed ([#2303](https://github.com/graphhopper/graphhopper/issues/2303))
+- maps: custom_model is now included in URL ([#2328](https://github.com/graphhopper/graphhopper/issues/2328))
+- maps/isochrone: works for different profiles now ([#2332](https://github.com/graphhopper/graphhopper/issues/2332))
 - there is no stable tag anymore, either use master or one of the release branches like 2.x, 3.x, ...
 - moved custom model editor to github.com/graphhopper/custom-model-editor
 - PointList#getSize() -> PointList#size()
-- migrated tests from junit 4 to 5 (#2324)
-- barriers do no longer block by default for car; remove block_barriers config option (see discussion in #2340)
+- migrated tests from junit 4 to 5 ([#2324](https://github.com/graphhopper/graphhopper/issues/2324))
+- barriers do no longer block by default for car; remove block_barriers config option ([see discussion in #2340](https://github.com/graphhopper/graphhopper/issues/2340))
 
 ### 3.0 [17 May 2021]
 
 - removed the stable tag (was pointing to commit dd2c20c763e4c19b701e92386432b37713cd8dc5)
-- fix location lookup with point hints for curved roads, #2319
+- fix location lookup with point hints for curved roads, [#2319](https://github.com/graphhopper/graphhopper/issues/2319)
 - custom_model_file only accepts file names without path. Use custom_model_folder instead.
 - the load method in GraphHopperWeb (client-hc) was removed
 - routing.ch.disabling_allowed and routing.lm.disabling_allowed configuration options are no longer supported
 - moved the graphhopper-reader-osm module into core, use the graphhopper-core module directly instead. GraphHopperOSM is
   deprecated, use GraphHopper instead.
 - subnetwork removal has changed and for every LocationIndex lookup one needs to explicitly include the new 'subnetwork'
-  EncodedValue, see #2290
+  EncodedValue, see [#2290](https://github.com/graphhopper/graphhopper/issues/2290)
 - DefaultEdgeFilter was renamed to AccessFilter. Use DefaultSnapFilter for the location lookup to make sure the query
   points do not snap to subnetworks. Previously subnetwork edges' access was set to zero, but this is no longer the
   case. Now subnetworks need to be identified by the subnetwork encoded value.
@@ -125,7 +125,7 @@
 - CustomWeighting language breaks old format but is more powerful and easier to read; it also allows factors >1 for
   server-side CustomModels
 - renamed GHUtilities.setProperties to setSpeed
-- Helper.createFormatter is using the ENGLISH Locale instead of UK, see #2186
+- Helper.createFormatter is using the ENGLISH Locale instead of UK, see [#2186](https://github.com/graphhopper/graphhopper/issues/2186)
 - the name of an encoded value can only contain lower letters, underscore or numbers. It has to start with a lower
   letter
 - default for GraphHopperMatrixWeb (client for Matrix API) is now the sync POST request without the artificial polling
@@ -133,7 +133,7 @@
 - refactored TransportationMode to better reflect the usage in source data parsing only
 - customizable routing is included in the endpoint /route (under the "custom_model" entry) and does not need to be
   enabled
-- the format of customizable routing completely changed but the maps demo includes a simple editor to learn it easily (#2239). See #2209 and #2251. See examples in this blog
+- the format of customizable routing completely changed but the maps demo includes a simple editor to learn it easily ([#2239](https://github.com/graphhopper/graphhopper/issues/2239)). See [#2209](https://github.com/graphhopper/graphhopper/issues/2209) and #2251. See examples in this blog
   post: https://www.graphhopper.com/blog/2020/05/31/examples-for-customizable-routing/
 - removed Dockerfile
 - the second argument of the VirtualEdgeIteratorState constructor is now an edge key (was an edge id before)
@@ -144,51 +144,51 @@
 
 - AbstractFlagEncoder#getMaxSpeed returns now Double#NaN instead of -1 if no maxspeed was found
 - renamed QueryResult -> Snap
-- much faster CH preparation (node- and edge-based), but increased memory usage during preparation, #2132
-- added navigation repo #2071
+- much faster CH preparation (node- and edge-based), but increased memory usage during preparation, [#2132](https://github.com/graphhopper/graphhopper/issues/2132)
+- added navigation repo [#2071](https://github.com/graphhopper/graphhopper/issues/2071)
 - use Java 8 also for core, client-hc and reader-osm modules. all modules use Java 8 now
-- removed android demo, #1940
-- added edge key path detail, #2073
-- fixed bug for turn restrictions on bridges/tunnels, #2070
-- improved resolution of elevation profiles, 3D Ramer-Douglas-Peucker and long edge sampling, #1953
+- removed android demo, [#1940](https://github.com/graphhopper/graphhopper/issues/1940)
+- added edge key path detail, [#2073](https://github.com/graphhopper/graphhopper/issues/2073)
+- fixed bug for turn restrictions on bridges/tunnels, [#2070](https://github.com/graphhopper/graphhopper/issues/2070)
+- improved resolution of elevation profiles, 3D Ramer-Douglas-Peucker and long edge sampling, [#1953](https://github.com/graphhopper/graphhopper/issues/1953)
 
 ### 1.0 [22 May 2020]
 
 - changes to config.yml:
   * properties have to follow the snake_case, #1918, easy convert via https://github.com/karussell/snake_case
-  * all routing profiles have to be configured when setting up GraphHopper, #1958, #1922
+  * all routing profiles have to be configured when setting up GraphHopper, #1958, [#1922](https://github.com/graphhopper/graphhopper/issues/1922)
   * for developing with JavaScript, npm and the web UI it is important to change your assets overrides to
-    web/target/classes/assets/, see #2041
+    web/target/classes/assets/, see [#2041](https://github.com/graphhopper/graphhopper/issues/2041)
 - moved SPTEntry and ShortcutUnpacker to com.graphhopper.routing(.ch)
 - renamed PathWrapper to ResponsePath
-- removed min_one_way_network_size parameter, #2042
+- removed min_one_way_network_size parameter, [#2042](https://github.com/graphhopper/graphhopper/issues/2042)
 - moved package from core/src/test/java/com/graphhopper/routing/profiles to ev
 - removed HintsMap
 - removed /change endpoint
-- removed vehicle,weighting and edge_based from GraphHopper class, replaced with new profile parameter, #1958
+- removed vehicle,weighting and edge_based from GraphHopper class, replaced with new profile parameter, [#1958](https://github.com/graphhopper/graphhopper/issues/1958)
 - there no longer is a default vehicle, not setting the vehicle now only works if there is exactly one profile that
   matches the other parameters. anyway you should use the new profile rather than the vehicle parameter.
 - removed IPFilter. Use a firewall instead.
-- PMap refactored. It is recommended to use putObject(String, Object) instead of put, #1956
-- removed UnsafeDataAccess as not maintained, see #1620
+- PMap refactored. It is recommended to use putObject(String, Object) instead of put, [#1956](https://github.com/graphhopper/graphhopper/issues/1956)
+- removed UnsafeDataAccess as not maintained, see [#1620](https://github.com/graphhopper/graphhopper/issues/1620)
 - add profiles parameter and replace prepare.ch/lm.weightings and prepare.ch.edge_based with profiles_ch/lm config
-  parameters, #1922
-- GraphHopper class no longer enables CH by default, #1914
-- replaced command line arguments -Dgraphhopper.. with -Ddw.graphhopper.. due to #1879, see also #1897
-- GraphHopper.init(CmdArgs)->GraphHopper.init(GraphHopperConfig), see #1879
+  parameters, [#1922](https://github.com/graphhopper/graphhopper/issues/1922)
+- GraphHopper class no longer enables CH by default, [#1914](https://github.com/graphhopper/graphhopper/issues/1914)
+- replaced command line arguments -Dgraphhopper.. with -Ddw.graphhopper.. due to #1879, see also [#1897](https://github.com/graphhopper/graphhopper/issues/1897)
+- GraphHopper.init(CmdArgs)->GraphHopper.init(GraphHopperConfig), see [#1879](https://github.com/graphhopper/graphhopper/issues/1879)
 - removed GenericWeighting and DataFlagEncoder as a normal CarFlagEncoder does the job too. Or use the new
-  CustomWeighting see #1841
-- remove TurnWeighting, see #1863
-- speed up path simplification with path details/instructions, see #1802
-- revert compression of landmark preparation data, see #1749 and #1376
+  CustomWeighting see [#1841](https://github.com/graphhopper/graphhopper/issues/1841)
+- remove TurnWeighting, see [#1863](https://github.com/graphhopper/graphhopper/issues/1863)
+- speed up path simplification with path details/instructions, see [#1802](https://github.com/graphhopper/graphhopper/issues/1802)
+- revert compression of landmark preparation data, see [#1749](https://github.com/graphhopper/graphhopper/issues/1749) and [#1376](https://github.com/graphhopper/graphhopper/issues/1376)
 - add required EncodedValues like road_class to EncodingManager if not added from user
 - removed PathNative,PathBidirRef,Path4CH,EdgeBasedPathCH and moved path extraction code out of Path class, added
-  PathExtractor,BidirPathExtractor(+subclasses for CH) instead, #1730
-- conditional turn restrictions now supported, #1683
-- added new `curbside` feature, #1697
+  PathExtractor,BidirPathExtractor(+subclasses for CH) instead, [#1730](https://github.com/graphhopper/graphhopper/issues/1730)
+- conditional turn restrictions now supported, [#1683](https://github.com/graphhopper/graphhopper/issues/1683)
+- added new `curbside` feature, [#1697](https://github.com/graphhopper/graphhopper/issues/1697)
 - moved QueryGraph to new routing.querygraph package
 - removed GraphExtension, #1783, renamed TurnCostExtension to TurnCostStorage
-- removed `heading`, `pass_through` and `ch.force_heading` parameters for speed mode/CH, #1763
+- removed `heading`, `pass_through` and `ch.force_heading` parameters for speed mode/CH, [#1763](https://github.com/graphhopper/graphhopper/issues/1763)
 
 ### 0.13 [17 Sep 2019]
 
@@ -207,21 +207,21 @@
 - changed output format of result=pointlist and moved it into separate endpoint /spt
 - removed TraversalMode.EDGE_BASED_1DIR and TraversalMode.EDGE_BASED_2DIR_UTURN, renamed TraversalMode.EDGE_BASED_2DIR
   to TraversalMode.EDGE_BASED
-- to prevent u-turns when using edge-based algorithms it is now required to use TurnWeighting, #1640
-- GraphHopperStorage.getGraph(Class) was replaced by GraphHopperStorage.getBase/CHGraph(), #1669
-- CHGraph.shortcut(int, int) was removed (use .shortcut(int, int, ...) and/or .shortcutEdgeBased(int, int, ...) instead, #1693
-- CH graphs are now identified using CHProfile instead of Weighting, #1670
+- to prevent u-turns when using edge-based algorithms it is now required to use TurnWeighting, [#1640](https://github.com/graphhopper/graphhopper/issues/1640)
+- GraphHopperStorage.getGraph(Class) was replaced by GraphHopperStorage.getBase/CHGraph(), [#1669](https://github.com/graphhopper/graphhopper/issues/1669)
+- CHGraph.shortcut(int, int) was removed (use .shortcut(int, int, ...) and/or .shortcutEdgeBased(int, int, ...) instead, [#1693](https://github.com/graphhopper/graphhopper/issues/1693)
+- CH graphs are now identified using CHProfile instead of Weighting, [#1670](https://github.com/graphhopper/graphhopper/issues/1670)
 - removed the 'traversal_mode` request parameter for /route, instead of 'traversal_mode=edge_based_2dir' use
   edge_based=true
-- removed GraphHopper.set/getTraversalMode() methods, #1705
-- edge-based CH is now chosen by default if it was prepared, #1706
-- it is now possible to specify finite u-turn costs for CH preparation, #1671
-- removed distances from CH shortcuts, reduces memory consumption per shortcut by 4 bytes (about 8-10%), #1719
+- removed GraphHopper.set/getTraversalMode() methods, [#1705](https://github.com/graphhopper/graphhopper/issues/1705)
+- edge-based CH is now chosen by default if it was prepared, [#1706](https://github.com/graphhopper/graphhopper/issues/1706)
+- it is now possible to specify finite u-turn costs for CH preparation, [#1671](https://github.com/graphhopper/graphhopper/issues/1671)
+- removed distances from CH shortcuts, reduces memory consumption per shortcut by 4 bytes (about 8-10%), [#1719](https://github.com/graphhopper/graphhopper/issues/1719)
 
 ### 0.12 [25 Mar 2019]
 
-- renamed VirtualEdgeIteratorState.getOriginalEdgeKey to more precise getOriginalEdgeKey #1549
-- access refactoring #1436 that moves AccessValue into SpatialRule.Access
+- renamed VirtualEdgeIteratorState.getOriginalEdgeKey to more precise getOriginalEdgeKey [#1549](https://github.com/graphhopper/graphhopper/issues/1549)
+- access refactoring [#1436](https://github.com/graphhopper/graphhopper/issues/1436) that moves AccessValue into SpatialRule.Access
 - refactoring of EncodingManager to use builder pattern. Migration should be simple. Replace new EncodingManager with
   EncodingManager.crea- The methods GraphHopper.setEnableInstructions/setPreferredLanguage is now in
   EncodingManager.Builder
@@ -233,11 +233,11 @@
 
 ### 0.11 [12 Sep 2018]
 
-- web resources for dropwizard web framework (no servlets anymore) #1108
+- web resources for dropwizard web framework (no servlets anymore) [#1108](https://github.com/graphhopper/graphhopper/issues/1108)
 - prefix -Dgraphhopper. for command line arguments necessary, see docs/web/quickstart.md or
   docs/core/quickstart-from-source.md#running--debbuging-with-intellij for details
 - delegated reading properties to dropwizard, i.e. the new format yml is not read again in GraphHopper.init
-- changed file format for landmarks #1376
+- changed file format for landmarks [#1376](https://github.com/graphhopper/graphhopper/issues/1376)
 - convert properties into new yml format via: https://gist.github.com/karussell/dbc9b4c455bca98b6a38e4a160e23bf8
 
 ### 0.10 [26 Feb 2018]
@@ -247,19 +247,19 @@
 
 ### 0.9 [13 Jun 2017]
 
-- remove war bundling support #297
+- remove war bundling support [#297](https://github.com/graphhopper/graphhopper/issues/297)
 - rename of DefaultModule to GraphHopperModule and GHServletModule to GraphHopperServletModule
-- EncodedValue uses Math.round(value/factor). This can change the retrieved values for EncodedValues #954
-- EncodedDoubleValue and EncodedValue requires maxValue/factor to be a natural number #954
+- EncodedValue uses Math.round(value/factor). This can change the retrieved values for EncodedValues [#954](https://github.com/graphhopper/graphhopper/issues/954)
+- EncodedDoubleValue and EncodedValue requires maxValue/factor to be a natural number [#954](https://github.com/graphhopper/graphhopper/issues/954)
 - default base algorithm for all modes is bidirectional A* (except speed mode)
-- introduced landmarks based hybrid mode, #780
+- introduced landmarks based hybrid mode, [#780](https://github.com/graphhopper/graphhopper/issues/780)
 - moving all prepare.xy configs to prepare.ch.xy and e.g. disallow the old
 - removed deprecated methods in GraphHopper (setCHWeighting, setCHWeightings, getCHWeightings, setCHWeightings,
   getCHPrepareThreads, setCHPrepareThreads), Path.calcMillis, findID of LocationIndex and all implementations
 
 ### 0.8 [18 Oct 2016]
 
-- refactoring to Weighting class, see #807
+- refactoring to Weighting class, see [#807](https://github.com/graphhopper/graphhopper/issues/807)
 - removed FlagEncoder from parameters as weighting.getFlagEncoder can and is used
 - all properties with prefix "osmreader." changed to "datareader." and osmreader.osm changed to datareader.file
 - maven/gradle dependency graphhopper is now split into graphhopper-core and graphhopper-reader-osm, i.e. if you
@@ -269,26 +269,26 @@
 - OSM reader separated from core, use new graphhopper-core package
 - moved subnetwork code into own package com.graphhopper.routing.subnetwork
 - moved weighting code into own package com.graphhopper.routing.weighting
-- code format has changed, so it is important to change your PRs too before you merge master, see discussion #770
+- code format has changed, so it is important to change your PRs too before you merge master, see discussion [#770](https://github.com/graphhopper/graphhopper/issues/770)
 
 ### 0.7 [15 Jun 2016]
 
 - added snapped points to output JSON for every path
 - the foot routing is now much smoother and only considers safe paths, to use beautiful roads (i.e. prefer hiking routes
-  etc) use the new 'hike' profiles, see #633
+  etc) use the new 'hike' profiles, see [#633](https://github.com/graphhopper/graphhopper/issues/633)
 - vehicle constants have moved to FlagEncoderFactory
-- several constants changed to under score notation see #719 with a few breaking changes, e.g. use lower case names for
+- several constants changed to under score notation see [#719](https://github.com/graphhopper/graphhopper/issues/719) with a few breaking changes, e.g. use lower case names for
   flag encoders or jsonp_allowed instead of the jsonpAllowed annotation
 - moving all string parameter constants into the Parameters class
-- no more acceptedRailways set see #662 for more information
+- no more acceptedRailways set see [#662](https://github.com/graphhopper/graphhopper/issues/662) for more information
 - web API: content type of gpx export is now application/gpx+xml if not explicitly specified
 - use prepare.ch.weightings instead of prepare.chWeighting e.g. for disabling CH use prepare.ch.weightings=no
 - GraphHopper class is refactored regarding RoutingAlgorithmFactory in order to fix problem when integrating flexibility
   routing, most of the CH related stuff is moved into CHAlgoFactoryDecorator, several methods are deprecated to use the
-  methods of the decorator, see #631
+  methods of the decorator, see [#631](https://github.com/graphhopper/graphhopper/issues/631)
 - WeightingMap is now named HintsMap
-- use the correct graphHopperFolder as no automatic fallback to 'folder-gh' is happening anymore, see #704
-- refactored FlagEncoder.handleFerryWay to getFerrySpeed to make it possible to fix #665
+- use the correct graphHopperFolder as no automatic fallback to 'folder-gh' is happening anymore, see [#704](https://github.com/graphhopper/graphhopper/issues/704)
+- refactored FlagEncoder.handleFerryWay to getFerrySpeed to make it possible to fix [#665](https://github.com/graphhopper/graphhopper/issues/665)
 - removed setWeightLimit as too unspecific for arbitrary weights, use setMaxVisitedNodes instead
 - missing renames for Path.setEdgeEntry -> setSPTEntry and AbstractAlgorithm.createEdgeEntry -> createSPTEntry
 
@@ -298,17 +298,17 @@
 - renamed EdgeEntry to SPTEntry and AStar.AStarEdge to AStar.AStarEntry
 - parameter force removed from AbstractFlagEncoder.applyMaxSpeed
 - GHResponse now wraps multiple PathWrapper; renamed GraphHopper.getPaths to calcPaths as 'get' sounded too cheap; a new
-  method RoutingAlgorithm.calcPaths is added; see #596
+  method RoutingAlgorithm.calcPaths is added; see [#596](https://github.com/graphhopper/graphhopper/issues/596)
 - moving lgpl licensed file into own submodule graphhopper-tools-lgpl
 - renaming of Tarjans algorithm class to TarjansSCCAlgorithm
-- more strict naming for Weighting enforced and more strict matching to select Weighting (equals check), #490
+- more strict naming for Weighting enforced and more strict matching to select Weighting (equals check), [#490](https://github.com/graphhopper/graphhopper/issues/490)
 - specify the preferred-language for way names during graph import (ISO 639-1 or ISO 639-2)
-- renaming of getCHWeighting to getCHWeightings due to supporting multiple CH weightings, #623
-- deprecation of setCHWeighting, please use setCHWeightings instead, #623
+- renaming of getCHWeighting to getCHWeightings due to supporting multiple CH weightings, [#623](https://github.com/graphhopper/graphhopper/issues/623)
+- deprecation of setCHWeighting, please use setCHWeightings instead, [#623](https://github.com/graphhopper/graphhopper/issues/623)
 
 ### 0.5 [12 Aug 2015]
 
-- Several names have changed see #466, #467, #468
+- Several names have changed see #466, #467, [#468](https://github.com/graphhopper/graphhopper/issues/468)
 - GraphHopper.optimize removed use postProcessing instead
 - method GraphHopper.getGraph() changed to getGraphHopperStorage()
 - the interface GraphStorage does no longer extend from the Graph interface. Use GraphHopperStorage (which implements
@@ -337,7 +337,7 @@
   preparation
 - removed LocationIndexTreeSC, use new LocationIndexTree(levelGraph.getBaseGraph(), directory) instead
 - getLevel and setLevel do no longer automatically increase node count, use getNodeAccess.ensureNode for that
-- normal algorithms are now possible on prepared graph use getBaseGraph, see #116
+- normal algorithms are now possible on prepared graph use getBaseGraph, see [#116](https://github.com/graphhopper/graphhopper/issues/116)
 - GHResponse no longer has isFound method, use !hasErrors instead
 - merged unused Edge class into EdgeEntry
 - astar and astarbi are now both none-heuristic and take parameters for beeline approximation:
@@ -355,7 +355,7 @@
 - instead of strings use the variables in AlgorithmOptions to specify an algorithm
 - use RoutingAlgorithmFactorySimple instead of RoutingAlgorithmFactory, also more consistent algorithm preparation
   handling due to new AlgorithmOptions, therefor removed NoOpAlgorithmPreparation
-- GHResponse.getXX methods now fail fast (throw an exception) if an error while route calculation occurred. See #287
+- GHResponse.getXX methods now fail fast (throw an exception) if an error while route calculation occurred. See [#287](https://github.com/graphhopper/graphhopper/issues/287)
 - renamed less often used URL parameter 'min_path_precision' to way_point_max_distance which makes it identical to the
   setWayPointMaxDistance method used for simplification at OSMImport
 - removed douglas.minprecision from Java API ghRequest.hints => use wayPointMaxDistance instead
@@ -365,9 +365,9 @@
 - removed GHRequest.getHint, instead use the provided methods in GHRequest.getHints().getXY and GHRequest.getHints().put
 - important graph incompatibility as properties cannot be loaded. renamed osmreader.bytesForFlags to
   graph.bytesForFlags, renamed config property osmreader.acceptWay to graph.flagEncoders
-- default weighting is now fastest, fixing #261
-- moved method GraphHopper.main into tools module and class com.graphhopper.tools.Import, see #250
-- refactored GraphHopper.createWeighting to accept more than one configuration option, see #237
+- default weighting is now fastest, fixing [#261](https://github.com/graphhopper/graphhopper/issues/261)
+- moved method GraphHopper.main into tools module and class com.graphhopper.tools.Import, see [#250](https://github.com/graphhopper/graphhopper/issues/250)
+- refactored GraphHopper.createWeighting to accept more than one configuration option, see [#237](https://github.com/graphhopper/graphhopper/issues/237)
 - refactored GraphHopper.disableCHShortcuts to setCHEnable(boolean)
 - moving the boolean parameter of GraphHopper.setInMemory into a separate method setStoreOnFlush
 - renaming of GraphHopper.setCHShortcuts to setCHWeighting, as well as the property prepare.chShortcuts to
@@ -379,7 +379,7 @@
   adding to manager
 - removed dijkstraNativebi as no performance advantage but maintenance disadvantage and similar to oneToManyDijkstra
 - to provide context for turn costs we needed to add prevEdgeId into Weighting.calcWeight, see new documentation
-- with the introduction of lock protection mechanism (see #112) GraphHopper needs always write access, see also #217
+- with the introduction of lock protection mechanism ([see #112](https://github.com/graphhopper/graphhopper/issues/112)) GraphHopper needs always write access, see also [#217](https://github.com/graphhopper/graphhopper/issues/217)
 - new GraphHopper.clean method to remove the graph directory via Java API
 
 ### 0.3.0 [13 May 2014]
@@ -398,7 +398,7 @@
 - edgeState.detach has now a reverse parameter, just use false to get previous results
 - web api: buildDate contains now timezone, algoType is replaced with weighting
 - dijkstraNative is now dijkstraNativebi
-- fixed #151
+- fixed [#151](https://github.com/graphhopper/graphhopper/issues/151)
 - calcWeight now contains reverse boolean to calculate correct direction dependent weight
 - EncodingManager always takes the encoders in constructor, to force always init
 - GraphHopper.setMemory(true, true/false) was refactored to GraphHopper.setMemory(true/false), use mmap config via
@@ -406,8 +406,8 @@
 - incompatible edges => you need to re-import data and/or update the edges file
 - the instructions of the web response does not contain times (string) but instead millis (long)
 - PrepareContractionHierarchies.setPeriodicUpdates is now in percentage not in absolute counts
-- improved bike routing #132, #138, #139, #150
-- gpx export via API, HTTP (route?type=gpx) and web interface is possible: #113, #136, #141
+- improved bike routing #132, #138, #139, [#150](https://github.com/graphhopper/graphhopper/issues/150)
+- gpx export via API, HTTP (route?type=gpx) and web interface is possible: #113, #136, [#141](https://github.com/graphhopper/graphhopper/issues/141)
 
 ### 0.2.0 [23 Nov 2013]
 
@@ -428,24 +428,24 @@
   * made DistanceCalc into interface (new DistanceCalcEarth implementation)
   * made GraphStorage into interface (new GraphHopperStorage implementation) move some methods from Graph into
     GraphStorage -> optimize + node removal stuff -> not necessary in algorithms
-- incompatible storage layout due to: pluggable endianness (#103) -> changed default endianness to LITTLE
+- incompatible storage layout due to: pluggable endianness ([#103](https://github.com/graphhopper/graphhopper/issues/103)) -> changed default endianness to LITTLE
 - add highly experimental UnsafeDataAccess to speed up search ~15%
 - several small bug fixes and improvements
 - different edge insert
 - important bug fix for edge retrieval which leads to massive speed up in prepare + CH algos
-- finally fixed major feature request #27 to allow gps-to-gps queries instead of only junction-to-junction ones.
-  * follow up in #52 and #115
+- finally fixed major feature request [#27](https://github.com/graphhopper/graphhopper/issues/27) to allow gps-to-gps queries instead of only junction-to-junction ones.
+  * follow up in [#52](https://github.com/graphhopper/graphhopper/issues/52) and [#115](https://github.com/graphhopper/graphhopper/issues/115)
   * slower but more precise and necessary edge distance calculation
-- fixed bug #105 for disconnected areas
+- fixed bug [#105](https://github.com/graphhopper/graphhopper/issues/105) for disconnected areas
 - fix which made CH preparation ~5% faster
 - more align API for all algorithms. and initCollection is called via 1000 not something depending on the graph size
 - API changed
   * case of vehicle now case does not matter
   * returned distance is in meter now
 - better i18n support
-- fixed major bug #102 when removing subnetworks
-- fixed bug #89 for trams on roads
-- completed improvement #93 for ferries
+- fixed major bug [#102](https://github.com/graphhopper/graphhopper/issues/102) when removing subnetworks
+- fixed bug [#89](https://github.com/graphhopper/graphhopper/issues/89) for trams on roads
+- completed improvement [#93](https://github.com/graphhopper/graphhopper/issues/93) for ferries
 - edge explorer makes none-CH algorithms ~8% faster
 - link to all closed issues: https://github.com/graphhopper/graphhopper/issues?milestone=2&state=closed
 
